@@ -4,14 +4,14 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="Pato-man",
-    version="0.9.5",
-    author="Abraão Caiana de Freitas",
-    author_email="abraao.freitas@ccc.ufcg.edu.br",
-    description="Pac-man with ducks",
+    name="Color-Theories",
+    version="0.1.0",
+    author="Augusto Nunes Zacarias",
+    author_email="augusto.zacarias@ccc.ufcg.edu.br",
+    description="A simple coloring game",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/AbraaoCF/Pato-man",
+    url="https://github.com/augustonz/Color-Theories",
     packages=setuptools.find_packages(),
     include_package_data=True,
     classifiers=[
@@ -25,7 +25,7 @@ setuptools.setup(
     python_requires='>=3.6',
     entry_points={
         'console_scripts': [
-            'patoman=Patoman.menu:run'
+            'ColorTheories=ColorTheories.menu:start'
             ]
         }
 )
