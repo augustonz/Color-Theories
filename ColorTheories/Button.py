@@ -1,28 +1,43 @@
 import pygame
-import tools
+from tools import *
 
 class Button(pygame.sprite.Sprite):
-    def __init__(self,pos,width,height,text,func):
+    def __init__(self,pos,width,height,text="Base text",font=None,func=None,img=None,args=None):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.surface.Surface((width,height))
-        self.image.fill((100,100,100))
+        if (img):
+            self.image=load_img(img)
+        else:
+            self.image = pygame.surface.Surface((width,height))
+            self.image.fill((100,100,100))
+        menuFont = load_font(font,height+20)
+        textWidth,textHeight=menuFont.size(text)
+        self.image.blit(menuFont.render(text,True,pygame.Color("black")),(int((width-textWidth)/2),8))
+        
         self.rect = self.image.get_rect()
         self.rect.update(pos,(width,height))
-        self.text = text
+
         self.func = func
         self.isHover=False
-
-    def isClicked(self,pos):
-        if self.rect.collidepoint(pos):
-            self.func(0.1)
-
+        self.start=False
+        self.args=args
+        
     def update(self):
         if self.isHover:
-            self.image.fill((200,200,200))
+            self.image.set_alpha(255)
         else:
-            self.image.fill((100,100,100))
+            self.image.set_alpha(200)
         
-
-    def setHover(self,pos):
-        self.isHover = self.rect.collidepoint(pos)
-    
+    def handleEvent(self,event):
+        if event.type==pygame.MOUSEBUTTONDOWN and event.button==1:
+            if self.rect.collidepoint(event.pos) and self.func:
+                self.start=True
+            else:
+                self.start=False
+        elif event.type==pygame.MOUSEMOTION:
+            self.isHover = self.rect.collidepoint(event.pos)
+        elif event.type==pygame.MOUSEBUTTONUP and event.button==1:
+            if self.rect.collidepoint(event.pos) and self.func:
+                if self.start:
+                    self.func(self.args)
+        else:
+            pass

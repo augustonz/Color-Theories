@@ -1,5 +1,5 @@
 from Button import Button
-import test
+import levelSelect
 from tools import *
 
 running = True
@@ -7,62 +7,50 @@ running = True
 def run():
 
     screen = pygame.display.set_mode(screenResolution)
+
     #Loads images
     background = load_img('background.png')
+    #Plays the beginning sound
+    if (not pygame.mixer.music.get_busy()): 
+        play_music('Game-Menu_Looping.wav')
+    
 
     #Loads the sounds
     testSound = load_sound('test.wav',0.3)
 
-    #loads the fonts
-    testFont=load_font("emulogic.ttf",16) 
+    titleFont=load_font("title.ttf",112)
+    def displayTitle():
+        screen.blit(titleFont.render("Color",True,pygame.Color("purple")),(281,8))
+        screen.blit(titleFont.render("Theories",True,pygame.Color("purple")),(200,108))
 
-    #Plays the beginning sound
-    play_music('test.wav')
+    #Menu options
     Menu = pygame.sprite.Group()
     buttons = pygame.sprite.Group()
-    playButton = Button((10,10),100,200,"This is text",levelsScreen)
+    playButton = Button((250,300),300,92,"start game","menu.otf",levelsScreen,img='menuButtonMini.png')
     buttons.add(playButton)
     Menu.add(playButton)
-    #player = Player()
 
     #Clock Speed
     clock = pygame.time.Clock()
     global running
+    running=True
 
     while running:
         for event in pygame.event.get():
+            playButton.handleEvent(event)
             if event.type == pygame.QUIT:
                 running = False
                 pygame.quit()
-            
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                for button in buttons.sprites():
-                    button.isClicked(event.pos)
-
-            elif event.type == pygame.MOUSEBUTTONUP:
-                print(event.pos)
-                print("Mouse UNclicked")
-
-            elif event.type == pygame.MOUSEMOTION:
-                for button in buttons.sprites():
-                    button.setHover(event.pos)
-
-            elif event.type == pygame.DROPBEGIN:
-                print(event)
-                print("File drop begin!")
-            
-            elif event.type == pygame.DROPCOMPLETE:
-                print(event)
-                print("File drop complete!")
 
         #Display objects on screen
-        screen.fill((255, 255, 255))
+        screen.blit(background,(0,0))
         Menu.update()
         Menu.draw(screen)
+        displayTitle()
         pygame.display.update()
-        clock.tick(30)
+        clock.tick(60)
 
-def levelsScreen():
+def levelsScreen(val):
     global running
     running = False
-    test.run()
+    levelSelect.run()
