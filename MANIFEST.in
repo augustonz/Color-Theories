@@ -1,4 +1,4 @@
-include Patoman/imgs/*.png
-include Patoman/sounds/*.wav
-include Patoman/fonts/*.ttf
-include Patoman/matriz.txt
+include ColorTheories/imgs/*.png
+include ColorTheories/sounds/*.wav
+include ColorTheories/fonts/*tf
+include ColorTheories/mypickle.pk
