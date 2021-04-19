@@ -3,7 +3,10 @@ from tools import *
 
 
 class Tabela():
-    def __init__(self,rows,columns):
+    def __init__(self,level):
+        columns = level['columns']
+        rows = level['rows']
+        self.win = level['win']
         self.image=pygame.surface.Surface(((len(columns)+1)*60,(len(rows)+1)*60))
         self.image.fill((255,255,255))
         self.respostas = [[None]*len(rows) for i in range(len(columns))]
@@ -54,6 +57,16 @@ class Tabela():
     def display(self):
         return self.image
 
+    def getTabela(self):
+        Str=""
+        for i in range(len(self.respostas)):
+            for j in range(len(self.respostas[0])):
+                Str+=str(self.respostas[i][j])
+            Str+="\n"
+        return Str
+        
+    def checkWin(self):
+        return self.respostas==self.win
     def handleEvent(self,event,selected):
         if event.type==pygame.MOUSEBUTTONUP:
             for i in range(len(self.respostas)):

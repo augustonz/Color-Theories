@@ -2,12 +2,8 @@ from Button import Button
 from tools import *
 import Menu
 import Level
-
-running = True
-
-RED=pygame.Color('red')
-GREEN=pygame.Color('green')
-BLUE=pygame.Color('blue')
+import constants
+import pickle
 
 def run():
 
@@ -28,19 +24,23 @@ def run():
     menuButton = Button((24,24),48,48,text="",font="menu.otf",img="menuBackMini.png",func=backMenu)
     buttons.add(menuButton)
     levelSelect.add(menuButton)
-    levelInfo=[{'num':'1','columns':[RED,GREEN,BLUE],'rows':[RED,GREEN,BLUE]},{},{},{},{},
-    {},{},{},{},{},
-    {},{},{},{},{},
-    {},{},{},{},{}]
+    levels = constants.levels
+    with open('mypickle.pk', 'rb') as fi:
+        openLevels = pickle.load(fi)
+
     for i in range(20):
-        but=Button((100+(i%5)*122,76+(i//5)*124),110,112,text=str(1+i),font="menu.otf",img="levelSelectLevelMini.png",func=level,args=levelInfo[i])
+        
+        but=Button((100+(i%5)*122,76+(i//5)*124),110,112,text=str(1+i),font="menu.otf",img="levelSelectLevelMini.png",func=level,args=levels[i])
+        if openLevels.count(i)==0:
+            but.image=load_img('lockedLevel.png')
+            but.func=None
         buttons.add(but)
         levelSelect.add(but)
+    
     #Clock Speed
     clock = pygame.time.Clock()
     global running
     running=True
-
     while running:
         for event in pygame.event.get():
             for button in buttons.sprites():

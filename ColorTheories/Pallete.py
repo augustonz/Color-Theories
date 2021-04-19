@@ -15,12 +15,9 @@ class Pallete():
         self.colors = []
         colorList=[pygame.Color('red'),pygame.Color('green'),pygame.Color('blue'),
         pygame.Color('yellow'),pygame.Color('cyan'),pygame.Color('purple'),
-        pygame.Color('white'),pygame.Color('black'),pygame.Color('blue')]
-        for i in range(20):
-            if (i<len(colorList)):
-                color = Generator((505+(i%3)*65,105+(i//3)*65),60,60,colorList[i])
-            else :
-                color = Generator((505+(i%3)*65,105+(i//3)*65),60,60,colorList[0])
+        pygame.Color('white'),pygame.Color('black'),pygame.Color('gray')]
+        for i in range(len(colorList)):
+            color = Generator((505+(i%3)*65,105+(i//3)*65),60,60,colorList[i])
             self.colors.append(color)
 
     def update(self):
