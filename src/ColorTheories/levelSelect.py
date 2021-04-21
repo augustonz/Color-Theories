@@ -25,7 +25,7 @@ def run():
     buttons.add(menuButton)
     levelSelect.add(menuButton)
     levels = constants.levels
-    with open('mypickle.pk', 'rb') as fi:
+    with open(pickle_path(), 'rb') as fi:
         openLevels = pickle.load(fi)
 
     for i in range(20):

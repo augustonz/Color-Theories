@@ -18,8 +18,7 @@ def run(volume):
    
 if __name__=='__main__':
    if (len(sys.argv)>1):
-      filename='mypickle.pk'
-      with open(filename, 'wb') as fi:
+      with open(tools.pickle_path(), 'wb') as fi:
          pickle.dump([0], fi)
    run(0.20)
    

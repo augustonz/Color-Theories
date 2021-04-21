@@ -1,6 +1,5 @@
 dist/
 build/
 *.egg-info
-__pycache__/
-Patoman/__pycache__
-Patoman/score.txt
+src/ColorTheories/__pycache__
+.*/

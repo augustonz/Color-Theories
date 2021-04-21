@@ -5,6 +5,9 @@ main_dir = os.path.split(os.path.abspath(__file__))[0]
 screenResolution=(800,600)
 globalVolume = 0.1
 
+def pickle_path():
+   return os.path.join(main_dir,"mypickle.pk")
+
 def load_img(name):
    path=os.path.join(main_dir,"imgs",name)
    return pygame.image.load(path)

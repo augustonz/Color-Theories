@@ -122,15 +122,15 @@ def winLevel(num):
     running=False
     global level
     global Val
-    filename = 'mypickle.pk'
-    with open(filename, 'rb') as fi:
+    with open(pickle_path(), 'rb') as fi:
         openLevels = pickle.load(fi)
     if (openLevels.count(Val['num'])==0):
         openLevels.append(int(Val['num']))
     
-    with open(filename, 'wb') as fi:
+    with open(pickle_path(), 'wb') as fi:
         # dump your data into the file
         pickle.dump(openLevels, fi)
+    
     def closeEnd(notUsed):
         global end
         end=False

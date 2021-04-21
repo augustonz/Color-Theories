@@ -1,4 +1,4 @@
-include ColorTheories/imgs/*.png
-include ColorTheories/sounds/*.wav
-include ColorTheories/fonts/*tf
-include ColorTheories/mypickle.pk
+include src/ColorTheories/imgs/*.png
+include src/ColorTheories/sounds/*.wav
+include src/ColorTheories/fonts/*tf
+include src/ColorTheories/mypickle.pk

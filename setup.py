@@ -5,27 +5,25 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="Color-Theories",
-    version="0.1.0",
+    version="0.1.2",
     author="Augusto Nunes Zacarias",
     author_email="augusto.zacarias@ccc.ufcg.edu.br",
     description="A simple coloring game",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/augustonz/Color-Theories",
-    packages=setuptools.find_packages(),
     include_package_data=True,
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    install_requires=[
-        'pygame'
-        ],
-    python_requires='>=3.6',
+    package_dir={"": "src"},
+    packages=setuptools.find_packages(where="src"),
+    python_requires=">=3.6",
     entry_points={
         'console_scripts': [
-            'ColorTheories=ColorTheories.menu:start'
+            'ColorTheories=src.ColorTheories.main:run'
             ]
         }
 )
