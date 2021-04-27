@@ -4,6 +4,7 @@ from Temporary import Temporary
 from Generator import Generator
 from Pallete import Pallete
 from Tabela import Tabela
+from Message import Message
 from tools import *
 import Menu
 import levelSelect
@@ -31,7 +32,7 @@ def run(val):
     global level
     level = pygame.sprite.Group()
     temp = pygame.sprite.Group()
-    
+
     pallete=Pallete()
     tabela = Tabela(val)
     winButton = Button((96,24),48,48,text="",font="menu.otf",img="menuBackMini.png",func=winLevel,args=int(val["num"])+1)
@@ -45,11 +46,34 @@ def run(val):
     running=True
     selectedColor=None
 
+    if "msg" in val:
+        paused=True
+        msg = Message((180,100),val['msg'])
+
+        while paused:
+            for event in pygame.event.get():
+                paused = msg.handleEvent(event)
+                if paused==None:paused=True
+                if event.type == pygame.QUIT:
+                    running = False
+                    pygame.quit()
+            screen.blit(background,(0,0))
+            screen.blit(titleFont.render("Level "+val['num'],True,pygame.Color("purple")),(316,0))
+            screen.blit(tabela.display(),(100,100))
+            screen.blit(pallete.draw(), (500, 100))
+            level.update()
+            level.draw(screen)
+            msg.display(screen)
+
+            pygame.display.update()
+            
+            clock.tick(60)
+    
     while running:
         for event in pygame.event.get():
             for sprite in level.sprites():
                 sprite.handleEvent(event)
-            
+            if "msg" in val: msg.handleEvent(event)
             pallete.handleEvent(event)
             tabela.handleEvent(event,selectedColor)
             
@@ -77,7 +101,7 @@ def run(val):
 
         level.update()
         level.draw(screen)
-        
+
         pygame.display.update()
 
         if (tabela.checkWin()):

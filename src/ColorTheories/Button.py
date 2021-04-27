@@ -10,11 +10,13 @@ class Button(pygame.sprite.Sprite):
             self.image = pygame.surface.Surface((width,height))
             self.image.fill((100,100,100))
         menuFont = load_font(font,height+20)
+        self.text=text
         textWidth,textHeight=menuFont.size(text)
         self.image.blit(menuFont.render(text,True,pygame.Color("black")),(int((width-textWidth)/2),8))
         
+        self.pos=pos
         self.rect = self.image.get_rect()
-        self.rect.update(pos,(width,height))
+        self.rect.update(self.pos,(width,height))
 
         self.func = func
         self.isHover=False
@@ -38,6 +40,6 @@ class Button(pygame.sprite.Sprite):
         elif event.type==pygame.MOUSEBUTTONUP and event.button==1:
             if self.rect.collidepoint(event.pos) and self.func:
                 if self.start:
-                    self.func(self.args)
+                    return self.func(self.args)
         else:
             pass

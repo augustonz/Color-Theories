@@ -1,4 +1,6 @@
 import pygame
+from tools import *
+from constants import *
 from Generator import Generator
 from Temporary import Temporary
 
@@ -7,15 +9,16 @@ class Pallete():
         self.image = pygame.surface.Surface((700,800))
         self.window = pygame.surface.Surface((200,400))
         self.window_rect = self.window.get_rect(topleft=(500,100))
-        
+        self.pickSound = load_sound('pick.wav',0.3)
+
         whiteBackground=pygame.surface.Surface((200,800))
         whiteBackground.fill(pygame.Color('white'))
         self.image.blit(whiteBackground,(500,0))
 
         self.colors = []
-        colorList=[pygame.Color('red'),pygame.Color('green'),pygame.Color('blue'),
-        pygame.Color('yellow'),pygame.Color('cyan'),pygame.Color('purple'),
-        pygame.Color('white'),pygame.Color('black'),pygame.Color('gray')]
+        colorList=[RED,GREEN,BLUE,
+        YELLOW,CYAN,MAGENTA,
+        WHITE,BLACK,GRAY]
         for i in range(len(colorList)):
             color = Generator((505+(i%3)*65,105+(i//3)*65),60,60,colorList[i])
             self.colors.append(color)
@@ -39,6 +42,7 @@ class Pallete():
                 if (color.handleEvent(event)):
                     newColor = Temporary((event.pos[0]-30,event.pos[1]-30),60,60,color.color)
                     newColor.selected=True
+                    self.pickSound.play()
                     return newColor
                     
         if event.type==pygame.MOUSEWHEEL:

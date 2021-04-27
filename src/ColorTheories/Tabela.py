@@ -11,12 +11,13 @@ class Tabela():
         self.image.fill((255,255,255))
         self.respostas = [[None]*len(rows) for i in range(len(columns))]
         self.rects = [[0]*len(rows) for i in range(len(columns))]
+        self.putSound = load_sound("put.wav",0.5)
 
         for i in range(len(self.respostas)):
             for j in range(len(self.respostas[i])):
                 surface = pygame.Surface((60,60))
                 surface.fill((255,255,255))
-                rect=surface.get_rect(topleft=(60*(i+1)+1,60*(j+1)+1))
+                rect=surface.get_rect(topleft=(60*(j+1)+1,60*(i+1)+1))
                 self.image.blit(surface,(60*(i+1),60*(j+1)))
                 self.rects[i][j] = rect
 
@@ -28,18 +29,20 @@ class Tabela():
             else:
                 self.image.blit(line,(i*60,0))
             
-            if i<len(columns):
-                pygame.draw.circle(self.image,columns[i],(30,60*(i+1)+30),25)
+            if i<len(columns) and rows[i]!=None:
+                pygame.draw.circle(self.image,pygame.Color('black'),(30,60*(i+1)+30),26)
+                pygame.draw.circle(self.image,rows[i],(30,60*(i+1)+30),24)
 
         for i in range(len(rows)+2):
-            line = pygame.surface.Surface(((len(columns)+1)*60,1))
+            line = pygame.surface.Surface(((len(rows)+1)*60,1))
             line.fill((0,0,0))
             if i==len(rows)+1:
                 self.image.blit(line,(0,i*60-1))
             else:
                 self.image.blit(line,(0,i*60))
-            if i<len(rows):
-                pygame.draw.circle(self.image,rows[i],(60*(i+1)+30,30),25)
+            if i<len(rows) and columns[i]!=None:
+                pygame.draw.circle(self.image,pygame.Color('black'),(60*(i+1)+30,30),26)
+                pygame.draw.circle(self.image,columns[i],(60*(i+1)+30,30),24)
         
         self.rect=self.image.get_rect()
 
@@ -47,12 +50,12 @@ class Tabela():
         for i in range(len(self.respostas)):
             for j in range(len(self.respostas[i])):
                 if self.respostas[i][j]!=None:
-                    pygame.draw.circle(self.image,pygame.Color('black'),(60*(i+1)+30,60*(j+1)+30),26)
-                    self.rects[i][j] = pygame.draw.circle(self.image,self.respostas[i][j],(60*(i+1)+30,60*(j+1)+30),24)
+                    pygame.draw.circle(self.image,pygame.Color('black'),(60*(j+1)+30,60*(i+1)+30),26)
+                    self.rects[i][j] = pygame.draw.circle(self.image,self.respostas[i][j],(60*(j+1)+30,60*(i+1)+30),24)
                 else:
                     surface = pygame.Surface((58,58))
                     surface.fill((255,255,255))
-                    self.image.blit(surface,(60*(i+1)+1,60*(j+1)+1))
+                    self.image.blit(surface,(60*(j+1)+1,60*(i+1)+1))
 
     def display(self):
         return self.image
@@ -70,9 +73,9 @@ class Tabela():
     def handleEvent(self,event,selected):
         if event.type==pygame.MOUSEBUTTONUP:
             for i in range(len(self.respostas)):
-                for j in range(len(self.respostas[i])):
-                    if (self.rects[i][j]!=None):
-                        if self.rects[i][j].collidepoint((event.pos[0]-100,event.pos[1]-100)):
-                            self.respostas[i][j]=selected
+                for j in range(len(self.respostas[0])):
+                    if self.rects[i][j].collidepoint((event.pos[0]-100,event.pos[1]-100)):
+                        self.putSound.play()
+                        self.respostas[i][j]=selected
         else:
             pass
