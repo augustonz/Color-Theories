@@ -12,7 +12,7 @@ CYAN=(0,255,255,255)
 levels = [
     {'num':'1','columns':[RED,GREEN,BLUE],'rows':[RED,GREEN,BLUE],
     'win':[[RED,YELLOW,MAGENTA],[YELLOW,GREEN,CYAN],[MAGENTA,CYAN,BLUE]],
-    "msg":'Bem vindo!'},
+    "msg":['Bem vindo!','Esse é o primeiro passo na sua jornada somando cores']},
     {'num':'2','columns':[YELLOW,RED,BLUE],'rows':[RED,BLUE ,YELLOW],
     'win':[[YELLOW,RED,MAGENTA],[WHITE,MAGENTA,BLUE],[YELLOW,YELLOW,WHITE]]},
     {'num':'3','columns':[RED,GREEN,BLUE,WHITE],'rows':[RED,GREEN,BLUE,WHITE],

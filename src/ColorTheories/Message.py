@@ -3,7 +3,7 @@ from Button import Button
 from tools import *
 
 class Message():
-    def __init__(self,pos,text="Base text"):
+    def __init__(self,pos,text=["Base text"]):
         self.image = load_img('messageBackground.png')
         self.pos = pos
         self.text=text
@@ -26,6 +26,7 @@ class Message():
     def display(self,surface):
         if (self.alive):
             surface.blit(self.image,self.pos)
-            surface.blit(self.font.render(self.text,True,pygame.Color("black")),(300,150))
+            for i in range(len(self.text)):
+                surface.blit(self.font.render(self.text[i],True,pygame.Color("black")),(300,150+(i*40)))
             surface.blit(self.okButton.image,self.okButton.pos)
 
