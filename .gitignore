@@ -1,5 +1,5 @@
 dist/
 build/
 *.egg-info
-src/ColorTheories/__pycache__
+**/__pycache__
 .*/

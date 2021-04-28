@@ -1,6 +1,7 @@
 import pygame
 from tools import *
 from constants import *
+import constants
 from Generator import Generator
 from Temporary import Temporary
 
@@ -15,10 +16,12 @@ class Pallete():
         whiteBackground.fill(pygame.Color('white'))
         self.image.blit(whiteBackground,(500,0))
 
+        keys = list(filter(lambda key: '__' not in key and 'level' not in key.lower() and 'Color' != key, dir(constants)))
         self.colors = []
-        colorList=[RED,GREEN,BLUE,
-        YELLOW,CYAN,MAGENTA,
-        WHITE,BLACK,GRAY]
+        colorList=[getattr(constants, keys[i]) for i in range(len(keys))]
+        # colorList=[RED,GREEN,BLUE,
+        # YELLOW,CYAN,MAGENTA,
+        # WHITE,BLACK,GRAY]
         for i in range(len(colorList)):
             color = Generator((505+(i%3)*65,105+(i//3)*65),60,60,colorList[i])
             self.colors.append(color)

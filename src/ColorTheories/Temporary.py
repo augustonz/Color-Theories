@@ -8,7 +8,7 @@ class Temporary(pygame.sprite.Sprite):
         self.image = pygame.surface.Surface((width,height),pygame.SRCALPHA)
         self.image.fill((0,0,0,0))
         pygame.draw.circle(self.image,pygame.Color('black'),(int(width/2),int(height/2)),26)
-        pygame.draw.circle(self.image,color,(int(width/2),int(height/2)),24)
+        pygame.draw.circle(self.image,tuple(color),(int(width/2),int(height/2)),24)
 
         self.rect = self.image.get_rect()
         self.pos=pos
