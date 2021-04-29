@@ -15,7 +15,7 @@ MINT=GREEN + GRAY + "mint"
 LIGHT_BLUE=BLUE + GRAY + "light_blue"
 
 level_objects = [
-    Level('1', [RED,GREEN,BLUE], [RED,GREEN,BLUE], None, 'math', '+', msg='Bem vindo!'),
+    Level('1', [RED,GREEN,BLUE], [RED,GREEN,BLUE], None, 'math', '+', msg=['Bem vindo!','Você precisa somar as cores','corretamente para concluir os níveis.','Lembre-se da teoria das cores.']),
     Level('2', [YELLOW,RED,BLUE], [RED,BLUE,YELLOW], None, 'math', '+'),
     Level('3', [RED,GREEN,BLUE,WHITE], [RED,GREEN,BLUE,WHITE], None, 'math', '+'),
     Level('4', [RED,GREEN,BLUE], [WHITE,BLACK,GRAY], None, 'math', '+'),

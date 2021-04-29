@@ -1,13 +1,33 @@
 import pygame
-import tools
+from tools import *
 
 class Generator():
     def __init__(self,pos,width,height,color):
         self.initialPos=pos
+        print(color.name)
         self.image = pygame.surface.Surface((width,height),pygame.SRCALPHA)
         self.image.fill((0,0,0,0))
-        pygame.draw.circle(self.image,pygame.Color('black'),(int(width/2),int(height/2)),26)
-        pygame.draw.circle(self.image,tuple(color),(int(width/2),int(height/2)),24)
+
+        smallFont = load_font('Roboto-Thin.ttf',10)
+        mediumFont = load_font('Roboto-Thin.ttf',15)
+        bigFont = load_font('Roboto-Thin.ttf',20)
+        
+        smallWidth=smallFont.size(color.name)[0]
+        mediumWidth=mediumFont.size(color.name)[0]
+        bigWidth=bigFont.size(color.name)[0]
+        print(smallWidth)
+        print(mediumWidth)
+        print(bigWidth)
+        
+        if bigWidth<60:
+            self.image.blit(bigFont.render(color.name,False,pygame.Color('black')),(30-bigWidth//2,0))
+        elif mediumWidth<60:
+            self.image.blit(mediumFont.render(color.name,False,pygame.Color('black')),(30-mediumWidth//2,5))
+        else:
+            self.image.blit(smallFont.render(color.name,False,pygame.Color('black')),(30-smallWidth//2,10))
+        
+        pygame.draw.circle(self.image,pygame.Color('black'),(int(width/2),50),26)
+        pygame.draw.circle(self.image,tuple(color),(int(width/2),50),24)
         
         self.rect = self.image.get_rect()
         self.pos=pos

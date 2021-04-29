@@ -19,11 +19,8 @@ class Pallete():
         keys = list(filter(lambda key: '__' not in key and 'level' not in key.lower() and 'Color' != key, dir(constants)))
         self.colors = []
         colorList=[getattr(constants, keys[i]) for i in range(len(keys))]
-        # colorList=[RED,GREEN,BLUE,
-        # YELLOW,CYAN,MAGENTA,
-        # WHITE,BLACK,GRAY]
         for i in range(len(colorList)):
-            color = Generator((505+(i%3)*65,105+(i//3)*65),60,60,colorList[i])
+            color = Generator((505+(i%3)*65,105+(i//3)*85),60,80,colorList[i])
             self.colors.append(color)
 
     def update(self):

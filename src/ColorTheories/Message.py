@@ -9,7 +9,8 @@ class Message():
         self.text=text
         self.rect=self.image.get_rect()
         self.alive=True
-        self.font= load_font('menu.otf',80)
+        self.fontBig= load_font('menu.otf',80)
+        self.font= load_font('menu.otf',60)
         self.okButton = Button((360,350),80,80,"","menu.otf",self.close,"nextLevelMini.png")
         
 
@@ -27,6 +28,11 @@ class Message():
         if (self.alive):
             surface.blit(self.image,self.pos)
             for i in range(len(self.text)):
-                surface.blit(self.font.render(self.text[i],True,pygame.Color("black")),(300,150+(i*40)))
+                if (i==0):
+                    width,height=self.fontBig.size(self.text[i])
+                    surface.blit(self.fontBig.render(self.text[i],True,pygame.Color("purple")),(400-width*2//3,150+(i*40)))
+                else :
+                    surface.blit(self.font.render(self.text[i],True,pygame.Color("black")),(250,170+(i*40)))
+                
             surface.blit(self.okButton.image,self.okButton.pos)
 
