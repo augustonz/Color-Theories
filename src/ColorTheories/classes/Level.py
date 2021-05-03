@@ -16,7 +16,7 @@ class Level:
 		self.win: list[list[Color]] = win
 		self.arithmetic_operation = Level.arithmetic_operations[arithmetic_operation]
 		if('msg' in kwargs.keys()):
-			self.msg: str = kwargs.get('msg')
+			self.msg: dict = kwargs.get('msg')
 
 	def __iter__(self):
 		yield 'num', self.num

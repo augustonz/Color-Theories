@@ -15,8 +15,8 @@ MINT=GREEN + GRAY + "mint"
 LIGHT_BLUE=BLUE + GRAY + "light_blue"
 
 level_objects = [
-    Level('1', [RED,GREEN,BLUE], [RED,GREEN,BLUE], None, 'math', '+', msg='Bem vindo!'),
-    Level('2', [YELLOW,RED,BLUE], [RED,BLUE,YELLOW], None, 'math', '+'),
+    Level('1', [RED,GREEN,BLUE], [RED,GREEN,BLUE], None, 'math', '+', msg={'title': 'Nível 1', 'content': 'Bem vindo!'}),
+    Level('2', [YELLOW,RED,BLUE], [RED,BLUE,YELLOW], None, 'math', '+', msg={'title': 'Nível 2', 'content': 'Continue, você está melhorando :)'}),
     Level('3', [RED,GREEN,BLUE,WHITE], [RED,GREEN,BLUE,WHITE], None, 'math', '+'),
     Level('4', [RED,GREEN,BLUE], [WHITE,BLACK,GRAY], None, 'math', '+'),
     Level('5', [RED,None,BLUE], [RED,GREEN,BLUE], [[BLACK,YELLOW,MAGENTA],[YELLOW,BLACK,CYAN],[MAGENTA,CYAN,BLACK]], 'arbitrary', '+'),

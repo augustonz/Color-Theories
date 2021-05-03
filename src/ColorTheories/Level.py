@@ -48,7 +48,7 @@ def run(val):
 
     if "msg" in val:
         paused=True
-        msg = Message((180,100),val['msg'])
+        msg = Message((180,100),val['msg']['title'],val['msg']['content'])
 
         while paused:
             for event in pygame.event.get():
