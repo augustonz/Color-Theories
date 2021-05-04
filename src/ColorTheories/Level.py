@@ -33,7 +33,7 @@ def run(val):
     level = pygame.sprite.Group()
     temp = pygame.sprite.Group()
 
-    pallete=Pallete()
+    pallete=Pallete(val)
     tabela = Tabela(val)
     winButton = Button((96,24),48,48,text="",font="menu.otf",img="menuBackMini.png",func=winLevel,args=int(val["num"])+1)
     level.add(winButton)

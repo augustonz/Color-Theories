@@ -2,12 +2,13 @@ import pygame
 from tools import *
 from constants import *
 import constants
+from classes.Color import Color
 from Generator import Generator
 from Temporary import Temporary
 
 class Pallete():
-    def __init__(self):
-        self.image = pygame.surface.Surface((700,800))
+    def __init__(self, level):
+        self.image = pygame.surface.Surface((700,850))
         self.window = pygame.surface.Surface((200,400))
         self.window_rect = self.window.get_rect(topleft=(500,100))
         self.pickSound = load_sound('pick.wav',0.3)
@@ -16,9 +17,10 @@ class Pallete():
         whiteBackground.fill(pygame.Color('white'))
         self.image.blit(whiteBackground,(500,0))
 
-        keys = list(filter(lambda key: '__' not in key and 'level' not in key.lower() and 'Color' != key, dir(constants)))
+        level_difficulty = level['difficulty']
+        keys = constants.colors
         self.colors = []
-        colorList=[getattr(constants, keys[i]) for i in range(len(keys))]
+        colorList=Color.sorted([getattr(constants, keys[i]) for i in range(len(keys)) if getattr(constants, keys[i]).difficulty <= level_difficulty])
         # colorList=[RED,GREEN,BLUE,
         # YELLOW,CYAN,MAGENTA,
         # WHITE,BLACK,GRAY]
