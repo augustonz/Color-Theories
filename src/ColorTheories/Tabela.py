@@ -1,5 +1,6 @@
 import pygame
 from tools import *
+from classes.Color import Color
 
 class Tabela():
     def __init__(self,level):
@@ -15,6 +16,10 @@ class Tabela():
         self.respostas = [[None]*len(rows) for i in range(len(columns))]
         self.rects = [[0]*len(rows) for i in range(len(columns))]
         self.putSound = load_sound("put.wav",0.5)
+        self.font = load_font("menu.otf", 140)
+
+        self.operator_symbol = self.font.render(level['operation_symbol'],True,pygame.Color("black"))
+        self.image.blit(self.operator_symbol, (15,-10))
 
         for i in range(len(self.respostas)):
             for j in range(len(self.respostas[i])):
@@ -49,8 +54,10 @@ class Tabela():
         
         self.rect=self.image.get_rect()
 
+        # print([color.name for color in Color.color_names])
         # DEBUG: Show win condition in console
         # ---------------
+        debug_type = 'value'
         if (level['condition'] == 'math'):
             win_condition = [[None]*len(rows) for i in range(len(columns))]
             for i in range(len(self.columns)):
@@ -59,13 +66,15 @@ class Tabela():
             print("Win: ")
             for i in range(len(win_condition)):
                 for j in range(len(win_condition)):
-                    print(win_condition[i][j].red, win_condition[i][j].green, win_condition[i][j].blue, end=" | ")
+                    if debug_type == 'value': print(win_condition[i][j].red, win_condition[i][j].green, win_condition[i][j].blue, end=" | ")
+                    else: print(win_condition[i][j].name, end=" | ")
                 print()
         else:
             print("Win: ")
             for i in range(len(self.win)):
                 for j in range(len(self.win[0])):
-                    print(self.win[i][j].red, self.win[i][j].green, self.win[i][j].blue, end=" | ")
+                    if debug_type == 'value': print(self.win[i][j].red, self.win[i][j].green, self.win[i][j].blue, end=" | ")
+                    else: print(self.win[i][j].name, end=" | ")
                 print()
         # ---------------
             
@@ -79,6 +88,7 @@ class Tabela():
                     surface = pygame.Surface((58,58))
                     surface.fill((255,255,255))
                     self.image.blit(surface,(60*(j+1)+1,60*(i+1)+1))
+        self.image.blit(self.operator_symbol, (15,-10))
 
     def display(self):
         return self.image
