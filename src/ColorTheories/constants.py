@@ -45,6 +45,7 @@ level_objects = [
         [YELLOW,    BLACK,  CYAN],
         [MAGENTA,   CYAN,   BLACK]], 
         'arbitrary', '+', 1),
+
     # a versão que já tinha do level 6 era o método "multiplicativo", então mudei para resolução aritmética.
     Level('6', [CYAN,YELLOW,MAGENTA], [CYAN,YELLOW,MAGENTA],
         [[CYAN, GREEN,  BLUE],
@@ -118,4 +119,3 @@ levels = [dict(level) for level in level_objects]
 #     'win':[[BLACK,YELLOW,MAGENTA],[YELLOW,BLACK,CYAN],[MAGENTA,CYAN,BLACK]]},
 #     {'num':'20','columns':[RED,GREEN,BLUE],'rows':[RED,GREEN,BLUE], 'condition': 'math',
 #     'win':[[BLACK,YELLOW,MAGENTA],[YELLOW,BLACK,CYAN],[MAGENTA,CYAN,BLACK]]}]
-

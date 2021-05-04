@@ -20,12 +20,10 @@ class Pallete():
         level_difficulty = level['difficulty']
         keys = constants.colors
         self.colors = []
-        colorList=Color.sorted([getattr(constants, keys[i]) for i in range(len(keys)) if getattr(constants, keys[i]).difficulty <= level_difficulty])
-        # colorList=[RED,GREEN,BLUE,
-        # YELLOW,CYAN,MAGENTA,
-        # WHITE,BLACK,GRAY]
+        colorList=[getattr(constants, keys[i]) for i in range(len(keys))]
+
         for i in range(len(colorList)):
-            color = Generator((505+(i%3)*65,105+(i//3)*65),60,60,colorList[i])
+            color = Generator((505+(i%3)*65,105+(i//3)*85),60,80,colorList[i])
             self.colors.append(color)
 
     def update(self):
