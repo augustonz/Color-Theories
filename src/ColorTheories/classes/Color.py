@@ -76,9 +76,9 @@ class Color:
 		if type(other) is not Color:
 			return _tmp
 		else:
-			_tmp.red = abs(_tmp.red - other.red)
-			_tmp.green = abs(_tmp.green - other.green)
-			_tmp.blue = abs(_tmp.blue - other.blue)
+			_tmp.red = max(_tmp.red - other.red,0)
+			_tmp.green = max(_tmp.green - other.green,0)
+			_tmp.blue = max(_tmp.blue - other.blue,0)
 			_tmp.alpha = min(math.floor(((_tmp.alpha/255)+((other.alpha/255)*_tmp.alpha/255))*255), 255)
 			_tmp = self._update_static_values(_tmp)
 		return _tmp

@@ -28,18 +28,32 @@ OLIVE=Color.fromNewColor(LIGHT_BLUE - WHITE, "olive", 3)
 PURPLE=Color.fromNewColor(MINT - WHITE, "purple", 3)
 
 colors = [prop for prop in dir() if '_' != prop[0] and prop not in ['Color', 'Level']]
+# [RED,GREEN,BLUE], [WHITE,BLACK,GRAY], black white gray
+# [YELLOW,RED,BLUE], [RED,BLUE,YELLOW]  can repeat color
+#[RED,GREEN,BLUE,WHITE], [RED,GREEN,BLUE,WHITE], big
 
-level_objects = [
-    Level('1', [RED,GREEN,BLUE], [RED,GREEN,BLUE], 
+#    Level('5', [RED,None,BLUE], [RED,GREEN,BLUE], 
+#        [[BLACK,    YELLOW, MAGENTA],
+#        [YELLOW,    BLACK,  CYAN],  MISSING THING
+#        [MAGENTA,   CYAN,   BLACK]], 
+#        'arbitrary', '+', 1),
+level_objects = [ 
+    # Soma básica
+    Level('1', [RED,BLUE], [GREEN], 
         None, 'math', '+', 1,
-        msg={'title': 'Nível 1', 'content': 'Bem vindo!'}),
-    Level('2', [YELLOW,RED,BLUE], [RED,BLUE,YELLOW], 
+        msg={'title': 'Bem vindo!', 'content': 'Use a ideia da soma de cores para completar a tabela.'}),
+    # Soma com repetição
+    Level('2', [GREEN,RED], [RED,BLUE], 
         None, 'math', '+', 1,
-        msg={'title': 'Nível 2', 'content': 'Continue, você está melhorando :)'}),
-    Level('3', [RED,GREEN,BLUE,WHITE], [RED,GREEN,BLUE,WHITE], 
-        None, 'math', '+', 1),
-    Level('4', [RED,GREEN,BLUE], [WHITE,BLACK,GRAY], 
+        msg={'title': 'Bem jogado!', 'content': 'Agora, o que acontece quando se somam duas cores iguais?'}),
+    # Soma com repetição e grande, introduz perto
+    Level('3', [RED,GREEN,BLUE], [BLACK,GREEN,BLUE], 
+        None, 'math', '+', 1,
+         msg={'title': 'Cuidado!', 'content': 'Preto é uma cor curiosa, o que será que ela faz?'}),
+    # Soma resultando em branco
+    Level('4', [MAGENTA,GREEN,BLUE], [GREEN,BLACK], 
         None, 'math', '+', 2),
+    #
     Level('5', [RED,None,BLUE], [RED,GREEN,BLUE], 
         [[BLACK,    YELLOW, MAGENTA],
         [YELLOW,    BLACK,  CYAN],

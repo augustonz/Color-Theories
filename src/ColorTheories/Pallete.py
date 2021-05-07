@@ -8,19 +8,22 @@ from Temporary import Temporary
 
 class Pallete():
     def __init__(self, level):
-        self.image = pygame.surface.Surface((700,850))
-        self.window = pygame.surface.Surface((200,400))
-        self.window_rect = self.window.get_rect(topleft=(500,100))
-        self.pickSound = load_sound('pick.wav',0.3)
-
-        whiteBackground=pygame.surface.Surface((200,800))
-        whiteBackground.fill(pygame.Color('white'))
-        self.image.blit(whiteBackground,(500,0))
 
         level_difficulty = level['difficulty']
         keys = constants.colors
         self.colors = []
         colorList=[getattr(constants, keys[i]) for i in range(len(keys))]
+        
+        palleteHeight=(len(colorList)+2)//3*85+105
+        print((len(colorList)+2)//3)
+        self.image = pygame.surface.Surface((700,palleteHeight))
+        self.window = pygame.surface.Surface((200,400))
+        self.window_rect = self.window.get_rect(topleft=(500,100))
+        self.pickSound = load_sound('pick.wav',0.3)
+
+        whiteBackground=pygame.surface.Surface((200,palleteHeight))
+        whiteBackground.fill(pygame.Color('white'))
+        self.image.blit(whiteBackground,(500,0))
 
         for i in range(len(colorList)):
             color = Generator((505+(i%3)*65,105+(i//3)*85),60,80,colorList[i])

@@ -4,7 +4,6 @@ from tools import *
 class Generator():
     def __init__(self,pos,width,height,color):
         self.initialPos=pos
-        print(color.name)
         self.image = pygame.surface.Surface((width,height),pygame.SRCALPHA)
         self.image.fill((0,0,0,0))
 
@@ -15,9 +14,6 @@ class Generator():
         smallWidth=smallFont.size(color.name)[0]
         mediumWidth=mediumFont.size(color.name)[0]
         bigWidth=bigFont.size(color.name)[0]
-        print(smallWidth)
-        print(mediumWidth)
-        print(bigWidth)
         
         if bigWidth<60:
             self.image.blit(bigFont.render(color.name,False,pygame.Color('black')),(30-bigWidth//2,0))

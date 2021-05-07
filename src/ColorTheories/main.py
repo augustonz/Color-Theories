@@ -20,5 +20,5 @@ if __name__=='__main__':
    if (len(sys.argv)>1):
       with open(tools.pickle_path(), 'wb') as fi:
          pickle.dump([0], fi)
-   run(0.20)
+   run(0.0)
    
