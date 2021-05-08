@@ -12,10 +12,9 @@ class Pallete():
         level_difficulty = level['difficulty']
         keys = constants.colors
         self.colors = []
-        colorList=[getattr(constants, keys[i]) for i in range(len(keys))]
-        
-        palleteHeight=(len(colorList)+2)//3*85+105
-        print((len(colorList)+2)//3)
+        colorList=Color.sorted([getattr(constants, keys[i]) for i in range(len(keys)) if getattr(constants, keys[i]).difficulty <= level_difficulty])        
+        palleteHeight=800
+        print((len(colorList)+2)//3*85+105)
         self.image = pygame.surface.Surface((700,palleteHeight))
         self.window = pygame.surface.Surface((200,400))
         self.window_rect = self.window.get_rect(topleft=(500,100))

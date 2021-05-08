@@ -96,6 +96,18 @@ class Color:
 			_tmp = self._update_static_values(_tmp)
 		return _tmp
 
+	def __truediv__(self, other):
+		_tmp = copy.deepcopy(self)
+		if type(other) is not Color:
+			return _tmp
+		else:
+			_tmp.red = abs(_tmp.red - other.red)
+			_tmp.green = abs(_tmp.green - other.green)
+			_tmp.blue = abs(_tmp.blue - other.blue)
+			_tmp.alpha = min(math.floor(((_tmp.alpha/255)+((other.alpha/255)*_tmp.alpha/255))*255), 255)
+			_tmp = self._update_static_values(_tmp)
+		return _tmp
+
 	@classmethod
 	def sorted(cls, colors: list):
 		bwg = [color for color in colors if color.name in ('black', 'white', 'gray')]

@@ -14,20 +14,25 @@ running = True
 level =""
 end = True
 Val=None
+lives=3#Sistema de vida
 def run(val):
     global Val
     Val=val
     screen = pygame.display.set_mode(screenResolution)
 
-    #Loads images
+    #Loads resources
     background = load_img('background.png')
-    
+    fullHeart = load_img('heartFullMini.png')
+    emptyHeart = load_img('heartEmptyMini.png')
     #Plays the beginning sound
     if (not pygame.mixer.music.get_busy()): 
         play_music('Game-Menu_Looping.wav')
-
     titleFont=load_font("title.ttf",66)
     textFont=load_font("menu.otf",48)
+    mistake=load_sound('mistake.wav',0.2)
+    failLevel=load_sound('failLevel.wav',0.2)
+    completeLevel=load_sound('completeLevel.wav',0.2)
+    
     #Menu options
     global level
     level = pygame.sprite.Group()
@@ -37,8 +42,33 @@ def run(val):
     tabela = Tabela(val)
     winButton = Button((96,24),48,48,text="",font="menu.otf",img="menuBackMini.png",func=winLevel,args=int(val["num"])+1)
     level.add(winButton)
+
+    def checkWin(val):
+        global lives
+        global Val
+        global winLevel
+        pygame.mixer.stop()
+        if (tabela.checkWin()):
+            completeLevel.play()
+            winLevel(int(Val["num"])+1)
+        else:
+            lives-=1
+            if lives>0:
+                mistake.play()
+            else:
+                failLevel.play()
+
+    checkWinButton = Button((150,470),300,92,text="Verificar resposta",font="menu.otf",img="menuButtonMini.png",func=checkWin)
+    level.add(checkWinButton)
     menuButton = Button((24,24),48,48,text="",font="menu.otf",img="menuBackMini.png",func=backMenu)
     level.add(menuButton)
+
+    def displayLives():
+        for i in range(3):
+            if (i+1)<=lives:
+                screen.blit(fullHeart,(96+52*i,24))
+            else:
+                screen.blit(emptyHeart,(96+52*i,24))
 
     #Clock Speed
     clock = pygame.time.Clock()
@@ -58,7 +88,8 @@ def run(val):
                     running = False
                     pygame.quit()
             screen.blit(background,(0,0))
-            screen.blit(titleFont.render("Level "+val['num'],True,pygame.Color("purple")),(316,0))
+            displayLives()
+            screen.blit(titleFont.render("Nível "+val['num'],True,pygame.Color("purple")),(316,0))
             screen.blit(tabela.display(),(100,100))
             screen.blit(pallete.draw(), (500, 100))
             level.update()
@@ -92,10 +123,13 @@ def run(val):
 
         #Display objects on screen
         screen.blit(background,(0,0))
-        screen.blit(titleFont.render("Level "+val['num'],True,pygame.Color("purple")),(316,0))
+        screen.blit(titleFont.render("Nível "+val['num'],True,pygame.Color("purple")),(316,0))
         
         pallete.update()
         tabela.update()
+        
+        displayLives()
+
         screen.blit(tabela.display(),(100,100))
         screen.blit(pallete.draw(), (500, 100))
 
@@ -103,14 +137,12 @@ def run(val):
         level.draw(screen)
 
         pygame.display.update()
-
-        if (tabela.checkWin()):
-            winLevel(int(val["num"])+1)
         
         clock.tick(60)
 
     global end
-    end=True    
+    end=True
+    level.remove(checkWinButton)
     while True:
         for event in pygame.event.get():
             for sprite in level.sprites():
@@ -122,14 +154,14 @@ def run(val):
 
         #Display objects on screen
         screen.blit(background,(0,0))
-        screen.blit(titleFont.render("Level "+val['num'],True,pygame.Color("purple")),(316,0))
+        screen.blit(titleFont.render("Nível "+val['num'],True,pygame.Color("purple")),(316,0))
 
         screen.blit(tabela.display(),(100,100))
         screen.blit(pallete.draw(), (500, 100))
 
         newBlock = load_img("square_mini.png")
-        newBlock.blit(titleFont.render("Good job!",True,pygame.Color("purple")),(80,25))
-        newBlock.blit(textFont.render("Review your answer or go to the next level!",True,pygame.Color("black")),(60,115))
+        newBlock.blit(titleFont.render("Parabéns!",True,pygame.Color("purple")),(80,25))
+        newBlock.blit(textFont.render("Revise sua resposta ou vá para o próximo nível.",True,pygame.Color("black")),(60,115))
         
         if end:
             screen.blit(newBlock, (200, 150))
@@ -144,6 +176,8 @@ def run(val):
 def winLevel(num):
     global running
     running=False
+    global lives
+    lives=3
     global level
     global Val
     with open(pickle_path(), 'rb') as fi:
@@ -172,7 +206,10 @@ def winLevel(num):
 def backMenu(val):
     global running
     running=False
+    global lives
+    lives=3
     levelSelect.run()
+
 
 def goToLevel(lvl):
     run(constants.levels[lvl-1])

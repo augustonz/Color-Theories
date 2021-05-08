@@ -1,5 +1,5 @@
 import pygame
-import sys
+import sys 
 import tools
 from pygame.locals import *
 import Menu
@@ -20,5 +20,5 @@ if __name__=='__main__':
    if (len(sys.argv)>1):
       with open(tools.pickle_path(), 'wb') as fi:
          pickle.dump([0], fi)
-   run(0.0)
+   run(0.2)
    

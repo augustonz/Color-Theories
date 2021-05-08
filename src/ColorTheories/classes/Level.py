@@ -6,9 +6,10 @@ class Level:
 		'+': operator.add,
 		'-': operator.sub,
 		'*': operator.mul,
+		'≠': operator.truediv
 	}
 
-	def __init__(self, num, columns, rows, win, condition, arithmetic_operation, difficulty, *args, **kwargs) -> None:
+	def __init__(self, num, columns, rows, win, condition, arithmetic_operation, difficulty, unveiled_cells, *args, **kwargs) -> None:
 		self.num: int = num
 		self.columns: list[Color] = columns
 		self.rows: list[Color] = rows
@@ -17,6 +18,7 @@ class Level:
 		self.arithmetic_operation = Level.arithmetic_operations[arithmetic_operation]
 		self.difficulty = difficulty
 		self.operation_symbol = arithmetic_operation
+		self.unveiled_cells = unveiled_cells
 		if('msg' in kwargs.keys()):
 			self.msg: dict = kwargs.get('msg')
 
@@ -29,5 +31,6 @@ class Level:
 		yield 'arithmetic_operation', self.arithmetic_operation
 		yield 'operation_symbol', self.operation_symbol
 		yield 'difficulty', self.difficulty
+		yield 'unveiled_cells', self.unveiled_cells
 		if(hasattr(self, 'msg')):
 			yield 'msg', self.msg

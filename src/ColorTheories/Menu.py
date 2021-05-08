@@ -13,10 +13,6 @@ def run():
     #Plays the beginning sound
     if (not pygame.mixer.music.get_busy()): 
         play_music('Game-Menu_Looping.wav')
-    
-
-    #Loads the sounds
-    testSound = load_sound('test.wav',0.3)
 
     titleFont=load_font("title.ttf",112)
     def displayTitle():
@@ -26,7 +22,7 @@ def run():
     #Menu options
     Menu = pygame.sprite.Group()
     buttons = pygame.sprite.Group()
-    playButton = Button((250,300),300,92,"start game","menu.otf",levelsScreen,img='menuButtonMini.png')
+    playButton = Button((250,300),300,92,"Jogar","menu.otf",levelsScreen,img='menuButtonMini.png')
     buttons.add(playButton)
     Menu.add(playButton)
 

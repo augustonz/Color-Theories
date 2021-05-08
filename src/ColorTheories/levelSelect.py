@@ -52,7 +52,7 @@ def run():
 
         #Display objects on screen
         screen.blit(background,(0,0))
-        screen.blit(titleFont.render("Levels",True,pygame.Color("purple")),(316,0))
+        screen.blit(titleFont.render("Níveis",True,pygame.Color("purple")),(316,0))
         levelSelect.update()
         levelSelect.draw(screen)
         pygame.display.update()
