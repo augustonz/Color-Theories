@@ -1,1 +1,1 @@
-print('This is the init')
+print('Welcom to Color Theories!')

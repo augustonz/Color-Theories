@@ -1,6 +1,6 @@
 import pygame
-from tools import *
-from classes.Color import Color
+from ColorTheories.tools import *
+from ColorTheories.classes.Color import Color
 
 class Tabela():
     def __init__(self,level):
@@ -16,6 +16,8 @@ class Tabela():
         self.image.fill((255,255,255))
         self.respostas = [[None]*len(columns) for i in range(len(rows))]
         self.rects = [[0]*len(columns) for i in range(len(rows))]
+        self.errors = []
+
         self.putSound = load_sound("put.wav",0.5)
         self.font = load_font("menu.otf", 140)
 
@@ -62,42 +64,48 @@ class Tabela():
                 pygame.draw.circle(self.image,tuple(columns[i]),(60*(i+1)+30,30),24)
         
         self.rect=self.image.get_rect()
-
-        # print([color.name for color in Color.color_names])
-        # DEBUG: Show win condition in console
+        
         # ---------------
-        debug_type = 'value'
-        if (level['condition'] == 'math'):
-            win_condition = [[None]*len(columns) for i in range(len(rows))]
-            for i in range(len(self.columns)):
-                for j in range(len(self.rows)):
-                    win_condition[j][i] = self.operator(self.rows[j], self.columns[i])
-            print("Win: ")
-            for i in range(len(win_condition)):
-                for j in range(len(win_condition[0])):
-                    if debug_type == 'value': print(win_condition[i][j].red, win_condition[i][j].green, win_condition[i][j].blue, end=" | ")
-                    else: print(win_condition[i][j].name, end=" | ")
-                print()
-        else:
-            print("Win: ")
-            for i in range(len(self.win)):
-                for j in range(len(self.win[0])):
-                    if debug_type == 'value': print(self.win[i][j].red, self.win[i][j].green, self.win[i][j].blue, end=" | ")
-                    else: print(self.win[i][j].name, end=" | ")
-                print()
-        # ---------------
+        # debug_type = 'value'
+        # if (level['condition'] == 'math'):
+        #     win_condition = [[None]*len(columns) for i in range(len(rows))]
+        #     for i in range(len(self.columns)):
+        #         for j in range(len(self.rows)):
+        #             win_condition[j][i] = self.operator(self.rows[j], self.columns[i])
+        #     print("Win: ")
+        #     for i in range(len(win_condition)):
+        #         for j in range(len(win_condition[0])):
+        #             if debug_type == 'value': print(win_condition[i][j].red, win_condition[i][j].green, win_condition[i][j].blue, end=" | ")
+        #             else: print(win_condition[i][j].name, end=" | ")
+        #         print()
+        # else:
+        #     print("Win: ")
+        #     for i in range(len(self.win)):
+        #         for j in range(len(self.win[0])):
+        #             if debug_type == 'value': print(self.win[i][j].red, self.win[i][j].green, self.win[i][j].blue, end=" | ")
+        #             else: print(self.win[i][j].name, end=" | ")
+        #         print()
+        # # ---------------
             
     def update(self):
         for i in range(len(self.respostas)):
             for j in range(len(self.respostas[i])):
+                surface = pygame.Surface((58,58))
+                surface.fill((255,255,255))
+                self.image.blit(surface,(60*(j+1)+1,60*(i+1)+1))
                 if self.respostas[i][j]!=None:
                     pygame.draw.circle(self.image,pygame.Color('black'),(60*(j+1)+30,60*(i+1)+30),26)
                     self.rects[i][j] = pygame.draw.circle(self.image,tuple(self.respostas[i][j]),(60*(j+1)+30,60*(i+1)+30),24)
-                else:
-                    surface = pygame.Surface((58,58))
-                    surface.fill((255,255,255))
+
+                if self.errors.count((i,j))>0:
+                    surface = pygame.Surface((58,58),pygame.SRCALPHA)
+                    surface.fill((255,0,0,128))
                     self.image.blit(surface,(60*(j+1)+1,60*(i+1)+1))
+
         self.image.blit(self.operator_symbol, (15,-10))
+
+    def resetErrors(self):
+        self.errors=[]
 
     def display(self):
         return self.image
@@ -112,12 +120,19 @@ class Tabela():
         
     def checkWin(self):
         won = True
+        self.resetErrors()
         if self.win_condition == 'math':
             for i in range(len(self.respostas)):
                 for j in range(len(self.respostas[0])):
-                    won = won and (self.respostas[i][j] == self.operator(self.rows[i], self.columns[j]))
+                    if self.respostas[i][j] != self.operator(self.rows[i], self.columns[j]):
+                        self.errors.append((i,j))
+                        won=False
         else:
-            won = self.respostas == self.win
+            for i in range(len(self.respostas)):
+                for j in range(len(self.respostas[0])):
+                    if self.respostas[i][j] != self.win[i][j]:
+                        self.errors.append((i,j))
+                        won=False
         return won
 
     def handleEvent(self,event,selected):

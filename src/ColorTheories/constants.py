@@ -1,5 +1,5 @@
-from classes.Color import Color
-from classes.Level import Level
+from ColorTheories.classes.Color import Color
+from ColorTheories.classes.Level import Level
 
 # as cores de dificuldade 0 são padrão, e devem poder ser utilizadas em qualquer nível
 RED=Color("Vermelho", 255,0,0,255, 0)

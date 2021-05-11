@@ -1,24 +1,30 @@
 import pickle
-from Button import Button
-from Temporary import Temporary
-from Generator import Generator
-from Pallete import Pallete
-from Tabela import Tabela
-from Message import Message
-from tools import *
-import Menu
-import levelSelect
-import constants
+from ColorTheories.Button import Button
+from ColorTheories.Temporary import Temporary
+from ColorTheories.Generator import Generator
+from ColorTheories.Pallete import Pallete
+from ColorTheories.Tabela import Tabela
+from ColorTheories.Message import Message
+from ColorTheories.tools import *
+from ColorTheories import Menu
+from ColorTheories import levelSelect
+from ColorTheories import constants
 
 running = True
 level =""
 end = True
 Val=None
+hasErrors=False
+errorTime=0
 lives=3#Sistema de vida
 def run(val):
     global Val
     Val=val
+
+    #screen surface
     screen = pygame.display.set_mode(screenResolution)
+    #Clock Speed
+    clock = pygame.time.Clock()
 
     #Loads resources
     background = load_img('background.png')
@@ -40,13 +46,18 @@ def run(val):
 
     pallete=Pallete(val)
     tabela = Tabela(val)
-    winButton = Button((96,24),48,48,text="",font="menu.otf",img="menuBackMini.png",func=winLevel,args=int(val["num"])+1)
-    level.add(winButton)
+
+    #Debug button to autowin levels
+    #winButton = Button((96,24),48,48,text="",font="menu.otf",img="menuBackMini.png",func=winLevel,args=int(val["num"])+1)
+    #level.add(winButton)
 
     def checkWin(val):
         global lives
         global Val
         global winLevel
+        global errorTime
+        global hasErrors
+
         pygame.mixer.stop()
         if (tabela.checkWin()):
             completeLevel.play()
@@ -54,9 +65,12 @@ def run(val):
         else:
             lives-=1
             if lives>0:
+                errorTime=pygame.time.get_ticks()
+                hasErrors=True
                 mistake.play()
             else:
                 failLevel.play()
+                loseLevel(int(Val["num"])+1)
 
     checkWinButton = Button((150,470),300,92,text="Verificar resposta",font="menu.otf",img="menuButtonMini.png",func=checkWin)
     level.add(checkWinButton)
@@ -70,8 +84,6 @@ def run(val):
             else:
                 screen.blit(emptyHeart,(96+52*i,24))
 
-    #Clock Speed
-    clock = pygame.time.Clock()
     global running
     running=True
     selectedColor=None
@@ -128,6 +140,12 @@ def run(val):
         pallete.update()
         tabela.update()
         
+        global hasErrors
+        global errorTime
+        if pygame.time.get_ticks()-errorTime>600 and hasErrors:
+            hasErrors=False
+            tabela.resetErrors()
+        
         displayLives()
 
         screen.blit(tabela.display(),(100,100))
@@ -160,13 +178,17 @@ def run(val):
         screen.blit(pallete.draw(), (500, 100))
 
         newBlock = load_img("square_mini.png")
-        newBlock.blit(titleFont.render("Parabéns!",True,pygame.Color("purple")),(80,25))
-        newBlock.blit(textFont.render("Revise sua resposta ou vá para o próximo nível.",True,pygame.Color("black")),(60,115))
-        
+
+        if tabela.checkWin():
+            newBlock.blit(titleFont.render("Parabéns!",True,pygame.Color("purple")),(80,25))
+            newBlock.blit(textFont.render("Revise sua resposta ou vá para o próximo nível.",True,pygame.Color("black")),(60,115))
+        else:
+            newBlock.blit(titleFont.render("Que pena...",True,pygame.Color("purple")),(80,25))
+            newBlock.blit(textFont.render("Você falhou agora, mas não desista!",True,pygame.Color("black")),(60,115))
+ 
         if end:
             screen.blit(newBlock, (200, 150))
         
-
         level.update()
         level.draw(screen)
         
@@ -201,7 +223,22 @@ def winLevel(num):
     level.add(nextLevelButton)
     level.add(stopButton)
 
-
+def loseLevel(num):
+    global running
+    running=False
+    global level
+    
+    def closeEnd(notUsed):
+        global end
+        end=False
+        nextLevelButton.kill()
+        stopButton.kill()
+    
+    nextLevelButton = Button((425,325),80,80,img="nextLevelMini.png",text="",font="menu.otf",func=backMenu,args=num)
+    stopButton = Button((275,325),80,80,img="stopButtonMini.png",text="",font="menu.otf",func=closeEnd,args=None)
+    
+    level.add(nextLevelButton)
+    level.add(stopButton)
 
 def backMenu(val):
     global running

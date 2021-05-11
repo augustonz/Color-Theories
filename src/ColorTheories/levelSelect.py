@@ -1,8 +1,8 @@
-from Button import Button
-from tools import *
-import Menu
-import Level
-import constants
+from ColorTheories.Button import Button
+from ColorTheories.tools import *
+from ColorTheories import Menu
+from ColorTheories import Level
+from ColorTheories import constants
 import pickle
 
 def run():

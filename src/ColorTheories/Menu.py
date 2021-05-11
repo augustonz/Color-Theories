@@ -1,6 +1,6 @@
-from Button import Button
-import levelSelect
-from tools import *
+from ColorTheories.Button import Button
+from ColorTheories import levelSelect
+from ColorTheories.tools import *
 
 running = True
 

@@ -1,6 +1,6 @@
 import pygame
-from Button import Button
-from tools import *
+from ColorTheories.Button import Button
+from ColorTheories.tools import *
 
 class Message():
     def __init__(self,pos,title,text="Base text"):

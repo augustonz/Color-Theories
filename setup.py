@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="Color-Theories",
-    version="0.1.2",
+    version="0.1.5",
     author="Augusto Nunes Zacarias",
     author_email="augusto.zacarias@ccc.ufcg.edu.br",
     description="A simple coloring game",
@@ -23,7 +23,7 @@ setuptools.setup(
     python_requires=">=3.6",
     entry_points={
         'console_scripts': [
-            'ColorTheories=src.ColorTheories.main:run'
+            'ColorTheories=ColorTheories.main:run'
             ]
         }
 )

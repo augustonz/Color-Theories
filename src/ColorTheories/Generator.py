@@ -1,5 +1,5 @@
 import pygame
-from tools import *
+from ColorTheories.tools import *
 
 class Generator():
     def __init__(self,pos,width,height,color):

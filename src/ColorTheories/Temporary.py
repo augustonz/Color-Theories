@@ -1,5 +1,5 @@
 import pygame
-import tools
+from ColorTheories import tools
 
 class Temporary(pygame.sprite.Sprite):
     def __init__(self,pos,width,height,color):

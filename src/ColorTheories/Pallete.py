@@ -1,10 +1,10 @@
 import pygame
-from tools import *
-from constants import *
-import constants
-from classes.Color import Color
-from Generator import Generator
-from Temporary import Temporary
+from ColorTheories.tools import *
+from ColorTheories.constants import *
+from ColorTheories import constants
+from ColorTheories.classes.Color import Color
+from ColorTheories.Generator import Generator
+from ColorTheories.Temporary import Temporary
 
 class Pallete():
     def __init__(self, level):
@@ -14,7 +14,6 @@ class Pallete():
         self.colors = []
         colorList=Color.sorted([getattr(constants, keys[i]) for i in range(len(keys)) if getattr(constants, keys[i]).difficulty <= level_difficulty])        
         palleteHeight=800
-        print((len(colorList)+2)//3*85+105)
         self.image = pygame.surface.Surface((700,palleteHeight))
         self.window = pygame.surface.Surface((200,400))
         self.window_rect = self.window.get_rect(topleft=(500,100))

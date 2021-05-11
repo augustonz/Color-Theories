@@ -1,5 +1,5 @@
 import pygame
-from tools import *
+from ColorTheories.tools import *
 
 class Button(pygame.sprite.Sprite):
     def __init__(self,pos,width,height,text="Base text",font=None,func=None,img=None,args=None):
