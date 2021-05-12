@@ -1,8 +1,9 @@
 import pygame
+from ColorTheories.classes.Entity import Entity
 from ColorTheories.tools import *
 
 class Generator():
-    def __init__(self,pos,width,height,color):
+    def __init__(self,pos,width,height,entity: Entity):
         self.initialPos=pos
         self.image = pygame.surface.Surface((width,height),pygame.SRCALPHA)
         self.image.fill((0,0,0,0))
@@ -11,19 +12,18 @@ class Generator():
         mediumFont = load_font('Roboto-Thin.ttf',15)
         bigFont = load_font('Roboto-Thin.ttf',20)
         
-        smallWidth=smallFont.size(color.name)[0]
-        mediumWidth=mediumFont.size(color.name)[0]
-        bigWidth=bigFont.size(color.name)[0]
+        smallWidth=smallFont.size(entity.name)[0]
+        mediumWidth=mediumFont.size(entity.name)[0]
+        bigWidth=bigFont.size(entity.name)[0]
         
         if bigWidth<60:
-            self.image.blit(bigFont.render(color.name,False,pygame.Color('black')),(30-bigWidth//2,0))
+            self.image.blit(bigFont.render(entity.name,False,pygame.Color('black')),(30-bigWidth//2,0))
         elif mediumWidth<60:
-            self.image.blit(mediumFont.render(color.name,False,pygame.Color('black')),(30-mediumWidth//2,5))
+            self.image.blit(mediumFont.render(entity.name,False,pygame.Color('black')),(30-mediumWidth//2,5))
         else:
-            self.image.blit(smallFont.render(color.name,False,pygame.Color('black')),(30-smallWidth//2,10))
+            self.image.blit(smallFont.render(entity.name,False,pygame.Color('black')),(30-smallWidth//2,10))
         
-        pygame.draw.circle(self.image,pygame.Color('black'),(int(width/2),50),26)
-        pygame.draw.circle(self.image,tuple(color),(int(width/2),50),24)
+        entity.render(self.image, int(width/2),50)
         
         self.rect = self.image.get_rect()
         self.pos=pos
@@ -32,7 +32,7 @@ class Generator():
 
         self.isHover=False
         self.selected=False
-        self.color = color
+        self.entity = entity
         self.alive=True
         
     def update(self):

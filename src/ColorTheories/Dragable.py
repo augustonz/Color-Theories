@@ -2,11 +2,11 @@ import pygame
 from ColorTheories import tools
 
 class Dragable():
-    def __init__(self,pos,width,height,color):
+    def __init__(self,pos,width,height,entity):
         self.initialPos=pos
         self.image = pygame.surface.Surface((width,height),pygame.SRCALPHA)
         self.image.fill((0,0,0,0))
-        pygame.draw.circle(self.image,color,(int(width/2),int(height/2)),25)
+        entity.render(self.image, int(width/2),int(height/2))
 
         self.rect = self.image.get_rect()
         self.pos=pos
@@ -15,8 +15,9 @@ class Dragable():
 
         self.isHover=False
         self.selected=False
-        self.color = color
+        self.entity = entity
         self.alive=True
+        
     def update(self):
         self.rect.update(self.pos,self.rect.size)
 

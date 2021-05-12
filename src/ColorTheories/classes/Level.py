@@ -1,23 +1,12 @@
-import operator
-from .Color import Color
+from ColorTheories.classes.Entity import Entity
 
 class Level:
-	arithmetic_operations = {
-		'+': operator.add,
-		'-': operator.sub,
-		'*': operator.mul,
-		'≠': operator.truediv
-	}
-
-	def __init__(self, num, columns, rows, win, condition, arithmetic_operation, difficulty, unveiled_cells, *args, **kwargs) -> None:
+	def __init__(self, num, columns, rows, win, difficulty, unveiled_cells, *args, **kwargs) -> None:
 		self.num: int = num
-		self.columns: list[Color] = columns
-		self.rows: list[Color] = rows
-		self.condition: str = condition
-		self.win: list[list[Color]] = win
-		self.arithmetic_operation = Level.arithmetic_operations[arithmetic_operation]
+		self.columns: list[Entity] = columns
+		self.rows: list[Entity] = rows
+		self.win: list[list[Entity]] = win
 		self.difficulty = difficulty
-		self.operation_symbol = arithmetic_operation
 		self.unveiled_cells = unveiled_cells
 		if('msg' in kwargs.keys()):
 			self.msg: dict = kwargs.get('msg')
@@ -26,10 +15,7 @@ class Level:
 		yield 'num', self.num
 		yield 'columns', self.columns
 		yield 'rows', self.rows
-		yield 'condition', self.condition
 		yield 'win', self.win
-		yield 'arithmetic_operation', self.arithmetic_operation
-		yield 'operation_symbol', self.operation_symbol
 		yield 'difficulty', self.difficulty
 		yield 'unveiled_cells', self.unveiled_cells
 		if(hasattr(self, 'msg')):

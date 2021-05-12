@@ -1,19 +1,18 @@
 import pygame
-from ColorTheories import tools
+from ColorTheories.classes.Entity import Entity
 
 class Temporary(pygame.sprite.Sprite):
-    def __init__(self,pos,width,height,color):
+    def __init__(self,pos,width,height,entity: Entity):
         pygame.sprite.Sprite.__init__(self)
 
         self.image = pygame.surface.Surface((width,height),pygame.SRCALPHA)
         self.image.fill((0,0,0,0))
-        pygame.draw.circle(self.image,pygame.Color('black'),(int(width/2),int(height/2)),26)
-        pygame.draw.circle(self.image,tuple(color),(int(width/2),int(height/2)),24)
+        entity.render(self.image,int(width/2),int(height/2))
 
         self.rect = self.image.get_rect()
         self.pos=pos
         self.selected=False
-        self.color = color
+        self.entity = entity
 
     def update(self):
         self.rect.update(self.pos,self.rect.size)
