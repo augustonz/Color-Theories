@@ -1,12 +1,9 @@
 import pickle
 from ColorTheories.Button import Button
-from ColorTheories.Temporary import Temporary
-from ColorTheories.Generator import Generator
 from ColorTheories.Pallete import Pallete
 from ColorTheories.Tabela import Tabela
 from ColorTheories.Message import Message
 from ColorTheories.tools import *
-from ColorTheories import Menu
 from ColorTheories import levelSelect
 from ColorTheories import constants
 
@@ -86,7 +83,7 @@ def run(val):
 
     global running
     running=True
-    selectedColor=None
+    selectedEntity=None
 
     if "msg" in val:
         paused=True
@@ -118,16 +115,16 @@ def run(val):
                 sprite.handleEvent(event)
             if "msg" in val: msg.handleEvent(event)
             pallete.handleEvent(event)
-            tabela.handleEvent(event,selectedColor)
+            tabela.handleEvent(event,selectedEntity)
             
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if (pallete.handleEvent(event)):
-                    newColor=pallete.handleEvent(event)
-                    selectedColor=newColor.color
-                    level.add(newColor)
+                    newEntity=pallete.handleEvent(event)
+                    selectedEntity=newEntity.entity
+                    level.add(newEntity)
                         
             if event.type == pygame.MOUSEBUTTONUP:
-                selectedColor=None
+                selectedEntity=None
 
             if event.type == pygame.QUIT:
                 running = False
