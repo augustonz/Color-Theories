@@ -27,9 +27,3 @@ def play_music(name):
 def load_font(name,size):
    path=os.path.join(main_dir,"fonts",name)
    return pygame.font.Font(path,size)
-
-def go_to_menu():
-   running=False
-   pygame.mixer.music.unload()
-   pygame.mixer.pause()
-   menu.run()

@@ -40,7 +40,7 @@ class Tabela():
                 self.image.blit(line,(i*60,0))
             
             if i<len(rows) and rows[i]!=None:
-                rows[i].render(self.image, 30,60*(i+1)+30)
+                rows[i].render(self.image, 0,60*(i+1))
 
         for i in range(len(rows)+2):
             line = pygame.surface.Surface(((len(columns)+1)*60,1))
@@ -50,7 +50,7 @@ class Tabela():
             else:
                 self.image.blit(line,(0,i*60))
             if i<len(columns) and columns[i]!=None:
-                columns[i].render(self.image, 60*(i+1)+30,30)
+                columns[i].render(self.image, 60*(i+1),0)
         
         self.rect=self.image.get_rect()
         
@@ -69,7 +69,7 @@ class Tabela():
                 surface.fill((255,255,255))
                 self.image.blit(surface,(60*(j+1)+1,60*(i+1)+1))
                 if self.respostas[i][j]!=None:
-                    self.rects[i][j] = self.respostas[i][j].render(self.image, 60*(j+1)+30,60*(i+1)+30)
+                    self.rects[i][j] = self.respostas[i][j].render(self.image, 60*(j+1),60*(i+1))
 
                 if self.errors.count((i,j))>0:
                     surface = pygame.Surface((58,58),pygame.SRCALPHA)

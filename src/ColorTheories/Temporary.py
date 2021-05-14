@@ -7,7 +7,7 @@ class Temporary(pygame.sprite.Sprite):
 
         self.image = pygame.surface.Surface((width,height),pygame.SRCALPHA)
         self.image.fill((0,0,0,0))
-        entity.render(self.image,int(width/2),int(height/2))
+        entity.render(self.image,0,0)
 
         self.rect = self.image.get_rect()
         self.pos=pos

@@ -1,4 +1,4 @@
-from ColorTheories.classes.Entity import Entity
+from classes.Entity import Entity
 
 class Level:
 	def __init__(self, num, columns, rows, win, difficulty, unveiled_cells, *args, **kwargs) -> None:

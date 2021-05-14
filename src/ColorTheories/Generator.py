@@ -23,7 +23,7 @@ class Generator():
         else:
             self.image.blit(smallFont.render(entity.name,False,pygame.Color('black')),(30-smallWidth//2,10))
         
-        entity.render(self.image, int(width/2),50)
+        entity.render(self.image, 0,20)
         
         self.rect = self.image.get_rect()
         self.pos=pos
