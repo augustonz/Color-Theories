@@ -1,8 +1,11 @@
+import pygame
 from ColorTheories.classes.Level import Level
 from ColorTheories.classes.Entity import Entity
-from pygame.draw import circle, polygon, rect
 
-from ColorTheories.tools import load_img
+from ColorTheories.tools import load_font, load_img
+pygame.font.init()
+roboto = load_font('Roboto-Thin.ttf',25)
+roboto.bold = True
 
 _E_MACA = Entity(1, 'Maçã', lambda surface, x, y: surface.blit(load_img('maca.png'),(x,y)))
 _E_MACA2 = Entity(1, 'Maçã', lambda surface, x, y: surface.blit(load_img('maca2.png'),(x,y)))
@@ -15,63 +18,62 @@ _E_MELANCIA = Entity(1, 'Melancia', lambda surface, x, y: surface.blit(load_img(
 _E_PERA = Entity(1, 'Pera', lambda surface, x, y: surface.blit(load_img('pera.png'),(x,y)))
 _E_LIMAO = Entity(1, 'Limão', lambda surface, x, y: surface.blit(load_img('limao.png'),(x,y)))
 
-CIRCULO = Entity(1, 'circulo', lambda surface, x, y: circle(surface, 'black', (x,y), 26))
-TRIANGULO = Entity(1, 'triangulo', lambda surface, x, y: polygon(surface, 'black', [(x,y-26), (x-26, y+26), (x+26, y+26)]))
-_E_QUADRADO = Entity(1, 'quadrado', lambda surface, x, y: rect(surface, 'black', (x+4,y+4, 52,52)))
+_E_LETRA_E = Entity(1, 'letra e', lambda surface, x, y: surface.blit(roboto.render(' e ', True, 'white', 'black'), (x+15,y+18)))
+_E__LETRA_A = Entity(1, 'letra a', lambda surface, x, y: surface.blit(roboto.render(' a ', True, 'white', 'black'), (x+15,y+18)))
+_E_LETRA_B = Entity(1, 'letra b', lambda surface, x, y: surface.blit(roboto.render(' b ', True,  'white', 'black'), (x+15,y+18)))
 
 entities = [prop for prop in dir() if '_E_' in prop]
 
 level_objects = [
-    Level('1', [_E_BANANA, _E_CEREJA], [_E_BANANA, _E_CEREJA],
+    Level('1', [_E_LETRA_E, _E__LETRA_A], [_E_LETRA_E, _E__LETRA_A],
+    [[_E_LETRA_E, _E__LETRA_A],
+    [_E__LETRA_A, _E_LETRA_E]], 1, [(0,0)]), 
+    Level('2', [_E_LETRA_E, _E__LETRA_A, _E_LETRA_B], [_E_LETRA_E, _E__LETRA_A, _E_LETRA_B],
+    [[_E_LETRA_E, _E__LETRA_A, _E_LETRA_B],
+    [_E__LETRA_A, _E_LETRA_B, _E_LETRA_E],
+    [_E_LETRA_B, _E_LETRA_E, _E__LETRA_A]], 1, [(0,0)]), 
+    Level('3', [_E_BANANA, _E_CEREJA], [_E_BANANA, _E_CEREJA],
     [[_E_BANANA, _E_CEREJA],
     [_E_CEREJA, _E_BANANA]], 1, [(0,0)]), 
-    Level('2', [_E_MACA, _E_LARANJA,_E_LIMAO], [_E_MACA, _E_LARANJA,_E_LIMAO],
+    Level('4', [_E_MACA, _E_LARANJA,_E_LIMAO], [_E_MACA, _E_LARANJA,_E_LIMAO],
     [[_E_MACA, _E_LARANJA,_E_LIMAO],
     [_E_LARANJA, _E_LIMAO,_E_MACA],
     [_E_LIMAO, _E_MACA,_E_LARANJA]], 1, [(0,1),(0,2)]),
-    Level('3', [_E_UVA, _E_LARANJA,_E_BANANA], [_E_BANANA, _E_UVA,_E_LARANJA],
+    Level('5', [_E_UVA, _E_LARANJA,_E_BANANA], [_E_BANANA, _E_UVA,_E_LARANJA],
     [[_E_BANANA, _E_UVA,_E_LARANJA],
     [_E_UVA, _E_LARANJA,_E_BANANA],
     [_E_LARANJA, _E_BANANA,_E_UVA]], 1, [(1,1)]),
-    Level('4', [_E_MACA2, _E_PERA,_E_MACA], [_E_MACA, _E_PERA,_E_MACA2],
+    Level('6', [_E_MACA2, _E_PERA,_E_MACA], [_E_MACA, _E_PERA,_E_MACA2],
     [[_E_MACA, _E_MACA2,_E_PERA],
     [_E_PERA, _E_MACA,_E_MACA2],
     [_E_MACA2, _E_PERA,_E_MACA]], 1, [(1,2)]),
-    Level('5', [_E_CEREJA, _E_MELANCIA,_E_MORANGO], [_E_MELANCIA, _E_CEREJA,_E_MORANGO],
+    Level('7', [_E_CEREJA, _E_MELANCIA,_E_MORANGO], [_E_MELANCIA, _E_CEREJA,_E_MORANGO],
     [[_E_MORANGO, _E_CEREJA,_E_MELANCIA],
     [_E_MELANCIA, _E_MORANGO,_E_CEREJA],
     [_E_CEREJA, _E_MELANCIA,_E_MORANGO]], 1, [(1,0)]),
-    Level('6', [_E_LIMAO, _E_LARANJA,_E_UVA,_E_PERA], [_E_LARANJA, _E_UVA,_E_PERA,_E_LIMAO],
+    Level('8', [_E_LIMAO, _E_LARANJA,_E_UVA,_E_PERA], [_E_LARANJA, _E_UVA,_E_PERA,_E_LIMAO],
     [[_E_PERA, _E_UVA,_E_LARANJA,_E_LIMAO],
     [_E_LIMAO, _E_LARANJA,_E_UVA,_E_PERA],
     [_E_LARANJA, _E_LIMAO,_E_PERA,_E_UVA],
     [_E_UVA, _E_PERA,_E_LIMAO,_E_LARANJA]], 1, [(0,0),(2,0),(1,1),(1,2),(2,3)]),
-    Level('7', [_E_LIMAO, _E_MACA2,_E_MELANCIA,_E_CEREJA], [_E_MACA2, _E_MELANCIA,_E_CEREJA,_E_LIMAO],
+    Level('9', [_E_LIMAO, _E_MACA2,_E_MELANCIA,_E_CEREJA], [_E_MACA2, _E_MELANCIA,_E_CEREJA,_E_LIMAO],
     [[_E_MACA2, _E_CEREJA,_E_LIMAO,_E_MELANCIA],
     [_E_MELANCIA, _E_LIMAO,_E_CEREJA,_E_MACA2],
     [_E_CEREJA, _E_MELANCIA,_E_MACA2,_E_LIMAO],
     [_E_LIMAO, _E_MACA2,_E_MELANCIA,_E_CEREJA]], 1, [(0,0),(1,2),(2,3)]),
-    Level('8', [None, _E_BANANA,None], [_E_MORANGO, _E_MACA2,_E_BANANA],
+    Level('10', [None, _E_BANANA,None], [_E_MORANGO, _E_MACA2,_E_BANANA],
     [[_E_MORANGO, _E_BANANA,_E_MACA2],
     [_E_MACA2, _E_MORANGO,_E_BANANA],
     [_E_BANANA, _E_MACA2,_E_MORANGO]], 1, [(0,1),(0,2)]),
-    Level('9', [_E_CEREJA, None,_E_PERA], [None, _E_LARANJA,None],
+    Level('11', [_E_CEREJA, None,_E_PERA], [None, _E_LARANJA,None],
     [[_E_CEREJA, _E_LARANJA,_E_PERA],
     [_E_LARANJA, _E_PERA,_E_CEREJA],
     [_E_PERA, _E_CEREJA,_E_LARANJA]], 1, [(2,0),(0,2)]),
-    Level('10', [_E_LIMAO, None,None,_E_CEREJA], [_E_MACA2, _E_MELANCIA,_E_CEREJA,_E_LIMAO],
+    Level('12', [_E_LIMAO, None,None,_E_CEREJA], [_E_MACA2, _E_MELANCIA,_E_CEREJA,_E_LIMAO],
     [[_E_MACA2, _E_CEREJA,_E_LIMAO,_E_MELANCIA],
     [_E_MELANCIA, _E_LIMAO,_E_CEREJA,_E_MACA2],
     [_E_CEREJA, _E_MELANCIA,_E_MACA2,_E_LIMAO],
     [_E_LIMAO, _E_MACA2,_E_MELANCIA,_E_CEREJA]], 1, [(3,1),(2,0),(1,1),(2,3)]),
-    Level('11', [_E_MACA, _E_LARANJA,_E_LIMAO], [_E_MACA, _E_LARANJA,_E_LIMAO],
-    [[_E_MACA, _E_LARANJA,_E_LIMAO],
-    [_E_LARANJA, _E_LIMAO,_E_MACA],
-    [_E_LIMAO, _E_MACA,_E_LARANJA]], 1, [(0,1),(0,2)]),
-    Level('12', [_E_MACA, _E_LARANJA,_E_LIMAO], [_E_MACA, _E_LARANJA,_E_LIMAO],
-    [[_E_MACA, _E_LARANJA,_E_LIMAO],
-    [_E_LARANJA, _E_LIMAO,_E_MACA],
-    [_E_LIMAO, _E_MACA,_E_LARANJA]], 1, [(0,1),(0,2)]),
     Level('13', [_E_MACA, _E_LARANJA,_E_LIMAO], [_E_MACA, _E_LARANJA,_E_LIMAO],
     [[_E_MACA, _E_LARANJA,_E_LIMAO],
     [_E_LARANJA, _E_LIMAO,_E_MACA],
