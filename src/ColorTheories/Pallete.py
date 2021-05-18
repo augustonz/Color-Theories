@@ -9,10 +9,10 @@ from ColorTheories.Temporary import Temporary
 class Pallete():
     def __init__(self, level):
 
-        level_difficulty = level['difficulty']
+        elements = level['rows']+level['columns']
         keys = constants.entities
         self.entities: list[Generator] = []
-        entity_list: list[Entity] = [getattr(constants, keys[i]) for i in range(len(keys)) if getattr(constants, keys[i]).difficulty <= level_difficulty]
+        entity_list: list[Entity] = [getattr(constants, keys[i]) for i in range(len(keys)) if getattr(constants, keys[i]) in elements]
         palleteHeight=800
         self.image = pygame.surface.Surface((700,palleteHeight))
         self.window = pygame.surface.Surface((200,400))

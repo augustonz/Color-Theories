@@ -53,6 +53,8 @@ class Tabela():
                 columns[i].render(self.image, 60*(i+1),0)
         
         self.rect=self.image.get_rect()
+        operation = load_font('FiraCode-Retina.ttf', 30)
+        self.image.blit(operation.render('*', True, 'black'), (24, 15))
         
         # ---------------
         print("Win: ")
